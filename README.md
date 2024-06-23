@@ -15,3 +15,6 @@ After review, your changes will be ready for production.
 When you encounter a bug make sure to report it in the issue tracker.
 Duplicates aren't a problem but avoid them if possible.
 Please include steps to recreate the issue if possible, or a screenshot of the issue if not replicable.
+
+# Style Guide
+Use Godot's C#/.NET style guide found here: https://docs.godotengine.org/en/stable/tutorials/scripting/c_sharp/c_sharp_style_guide.html
