@@ -1,3 +1,26 @@
-[gd_scene format=3 uid="uid://bx102inrc4um"]
+[gd_scene load_steps=3 format=3 uid="uid://bx102inrc4um"]
 
-[node name="Test" type="Node2D"]
+[ext_resource type="PackedScene" uid="uid://4l3ikeirdf1a" path="res://Scenes/Entities/Player.tscn" id="1_oda57"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3bakl"]
+size = Vector2(1200, 19)
+
+[node name="Master" type="Node2D"]
+
+[node name="Level" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="Level"]
+
+[node name="Player" parent="Level" instance=ExtResource("1_oda57")]
+
+[node name="TestingFloor" type="StaticBody2D" parent="Level"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/TestingFloor"]
+position = Vector2(-8, 327)
+shape = SubResource("RectangleShape2D_3bakl")
+
+[node name="ColorRect" type="ColorRect" parent="Level/TestingFloor/CollisionShape2D"]
+offset_left = -601.0
+offset_top = -9.0
+offset_right = 600.0
+offset_bottom = 40.0
