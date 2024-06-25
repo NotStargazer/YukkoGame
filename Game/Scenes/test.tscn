@@ -13,7 +13,7 @@ size = Vector2(230, 53)
 
 [node name="Background" type="Sprite2D" parent="Level"]
 texture_filter = 3
-scale = Vector2(15, 15)
+scale = Vector2(13, 13)
 texture = ExtResource("1_1arde")
 
 [node name="Camera2D" type="Camera2D" parent="Level"]
@@ -34,3 +34,4 @@ position = Vector2(-50, 38.5)
 shape = SubResource("RectangleShape2D_w5pnf")
 
 [node name="Player" parent="Level/Objects" instance=ExtResource("1_oda57")]
+position = Vector2(-18, 0)

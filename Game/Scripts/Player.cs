@@ -1,9 +1,14 @@
 using Godot;
 using System;
+using System.Text.RegularExpressions;
 
 public partial class Player : CharacterBody2D
 {
-	public const float Speed = 100.0f;
+	[Export] private TextureProgressBar _healthBar { get; set; }
+
+    public const float Speed = 100.0f;
+	public const int MaxHealth = 20;
+	public int Health { get; set; } = 20;
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -11,12 +16,9 @@ public partial class Player : CharacterBody2D
 
 		Vector2 input = Input.GetVector("left", "right", "up", "down");
 
-		//This will need to be tweaked for sure
-		input.Y /= 2;
-
         if (input != Vector2.Zero)
 		{
-			velocity = input.Normalized() * Speed;			
+			velocity = input.Normalized() * Speed;
 		}
 		else
 		{
@@ -28,4 +30,19 @@ public partial class Player : CharacterBody2D
 		Velocity = velocity;
 		MoveAndSlide();
 	}
+
+	public void Damage(int amount)
+	{
+		Health -= amount;
+
+		if (Health <= 0) 
+		{
+			QueueFree();
+		}
+	}
+
+	private void UpdateHealth()
+	{
+        _healthBar.Value = Health;
+    }
 }
