@@ -31,15 +31,28 @@ public partial class Player : CharacterBody2D
 		MoveAndSlide();
 	}
 
+	public void _HitboxEntered(Area2D area)
+	{
+		Damage(1);
+	}
+
 	public void Damage(int amount)
 	{
 		Health -= amount;
 
 		if (Health <= 0) 
 		{
+			Health = 0;
+			UpdateHealth();
 			QueueFree();
 		}
 	}
+
+	public void Heal(int amount) 
+	{
+		Health = Math.Clamp(Health + amount, 0, MaxHealth);
+        UpdateHealth();
+    }
 
 	private void UpdateHealth()
 	{
