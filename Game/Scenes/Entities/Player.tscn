@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://4l3ikeirdf1a"]
+
+[ext_resource type="Script" path="res://Scripts/Player.cs" id="1_egq2j"]
+[ext_resource type="Texture2D" uid="uid://c75mc3me070db" path="res://Assets/icon.svg" id="1_ptsbj"]
+[ext_resource type="Texture2D" uid="uid://d0nourgns0wm2" path="res://Assets/UI/HealthBar.png" id="3_m4v2u"]
+[ext_resource type="Texture2D" uid="uid://b1smp20ujrif7" path="res://Assets/UI/HealthBarFill.png" id="4_1p6s0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vis0v"]
+size = Vector2(117, 49)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7abyw"]
+size = Vector2(129, 51)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_healthBar")]
+script = ExtResource("1_egq2j")
+_healthBar = NodePath("UI/Healthbar")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ptsbj")
+
+[node name="CollisionBox" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 39.5)
+shape = SubResource("RectangleShape2D_vis0v")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Hitbox" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-0.5, 39.5)
+shape = SubResource("RectangleShape2D_7abyw")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Healthbar" type="TextureProgressBar" parent="UI"]
+texture_filter = 3
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 65.0
+offset_bottom = 35.0
+scale = Vector2(5, 5)
+max_value = 20.0
+value = 20.0
+texture_under = ExtResource("3_m4v2u")
+texture_progress = ExtResource("4_1p6s0")
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_HitboxEntered"]
