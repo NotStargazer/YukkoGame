@@ -1,17 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://bx102inrc4um"]
+[gd_scene load_steps=6 format=3 uid="uid://bx102inrc4um"]
 
 [ext_resource type="Texture2D" uid="uid://c2ekg84npif6g" path="res://Assets/TestingBackground.png" id="1_1arde"]
 [ext_resource type="PackedScene" uid="uid://4l3ikeirdf1a" path="res://Scenes/Entities/Player.tscn" id="1_oda57"]
 [ext_resource type="Texture2D" uid="uid://c75mc3me070db" path="res://Assets/icon.svg" id="3_3ub6s"]
+[ext_resource type="PackedScene" uid="uid://imb2uye54ghi" path="res://Scenes/Entities/Enemy.tscn" id="4_8m1al"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w5pnf"]
 size = Vector2(230, 53)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bsp0o"]
-size = Vector2(51, 46)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yau1f"]
-size = Vector2(57, 48)
 
 [node name="Master" type="Node2D"]
 
@@ -39,25 +34,8 @@ texture = ExtResource("3_3ub6s")
 position = Vector2(-50, 38.5)
 shape = SubResource("RectangleShape2D_w5pnf")
 
-[node name="Spike" type="StaticBody2D" parent="Level/Objects"]
-position = Vector2(-466, 147)
-
-[node name="Sprite2D" type="Sprite2D" parent="Level/Objects/Spike"]
-position = Vector2(-38.5, -65.5)
-scale = Vector2(0.398438, 2.02344)
-texture = ExtResource("3_3ub6s")
-
-[node name="CollisionBox" type="CollisionShape2D" parent="Level/Objects/Spike"]
-position = Vector2(-39.5, 39)
-shape = SubResource("RectangleShape2D_bsp0o")
-
-[node name="Hurtbox" type="Area2D" parent="Level/Objects/Spike"]
-collision_layer = 2
-collision_mask = 0
-
-[node name="Hurtbox" type="CollisionShape2D" parent="Level/Objects/Spike/Hurtbox"]
-position = Vector2(-39.5, 39)
-shape = SubResource("RectangleShape2D_yau1f")
-
 [node name="Player" parent="Level/Objects" instance=ExtResource("1_oda57")]
 position = Vector2(-18, 0)
+
+[node name="Enemy" parent="." instance=ExtResource("4_8m1al")]
+position = Vector2(-408, 55)

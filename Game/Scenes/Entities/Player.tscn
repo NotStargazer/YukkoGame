@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://4l3ikeirdf1a"]
+[gd_scene load_steps=13 format=3 uid="uid://4l3ikeirdf1a"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_egq2j"]
 [ext_resource type="Texture2D" uid="uid://c75mc3me070db" path="res://Assets/icon.svg" id="1_ptsbj"]
@@ -8,12 +8,123 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vis0v"]
 size = Vector2(117, 49)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s4fyf"]
+size = Vector2(73.5, 35)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7abyw"]
 size = Vector2(129, 51)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_healthBar")]
+[sub_resource type="Animation" id="Animation_wwluf"]
+resource_name = "attackLeft"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hitbox/Hitbox:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hitbox:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2biat"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hitbox/Hitbox:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_eoesc"]
+resource_name = "attackRight"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hitbox/Hitbox:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hitbox:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, -1)]
+}
+
+[sub_resource type="Animation" id="Animation_5gvcf"]
+resource_name = "hurt"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4slj8"]
+_data = {
+"RESET": SubResource("Animation_2biat"),
+"attackLeft": SubResource("Animation_wwluf"),
+"attackRight": SubResource("Animation_eoesc"),
+"hurt": SubResource("Animation_5gvcf")
+}
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_healthBar", "_animationPlayer")]
 script = ExtResource("1_egq2j")
 _healthBar = NodePath("UI/Healthbar")
+_animationPlayer = NodePath("AnimationPlayer")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_ptsbj")
@@ -22,15 +133,33 @@ texture = ExtResource("1_ptsbj")
 position = Vector2(-0.5, 39.5)
 shape = SubResource("RectangleShape2D_vis0v")
 
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="Hitbox" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(106.25, 0)
+shape = SubResource("RectangleShape2D_s4fyf")
+disabled = true
+
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
 
-[node name="Hitbox" type="CollisionShape2D" parent="Hurtbox"]
+[node name="Hurtbox" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-0.5, 39.5)
+shape = SubResource("RectangleShape2D_7abyw")
+
+[node name="DetectionBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="DetectionBox" type="CollisionShape2D" parent="DetectionBox"]
 position = Vector2(-0.5, 39.5)
 shape = SubResource("RectangleShape2D_7abyw")
 
 [node name="UI" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Healthbar" type="TextureProgressBar" parent="UI"]
 texture_filter = 3
@@ -44,4 +173,10 @@ value = 20.0
 texture_under = ExtResource("3_m4v2u")
 texture_progress = ExtResource("4_1p6s0")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4slj8")
+}
+
 [connection signal="area_entered" from="Hurtbox" to="." method="_HitboxEntered"]
+[connection signal="area_entered" from="DetectionBox" to="." method="_HitboxEntered"]
